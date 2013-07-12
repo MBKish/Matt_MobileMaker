@@ -69,33 +69,29 @@
     }
     NSLog(@"half length = %i", (length/2));
     // Insert code in here to check the characters of the array for palindronishness
-    int y = 0;
     int z = length - 1;
-    while (y<=((length/2))) {
-        
+    int y = 0;
+    
+    for (y = 0; y<(length/2); y++) {
         if (arrayOfCharacters[z] == arrayOfCharacters[y]) {
-            y++;
-            z--;
-            
             NSLog(@"y = %i", y);
-            NSLog(@"length = %i", z);
-
-            
-        } else {
-            break;
+            NSLog(@"z = %i", z);
+            z--;
         }
-        if (z == y) {
-            isPalindrome = YES;
-        }
-        
     }
     
-    if (isPalindrome) {
+    if (z <= y) {
+        isPalindrome = YES;
+    } else {
+        isPalindrome = NO;
+    }
+    
+    if (isPalindrome == NO){
+        [self showIsNotPalindrone];
+    }else{
         [self showIsPalindrone];
     }
-    else{
-        [self showIsNotPalindrone];
-    }    
+
 }
 
 
