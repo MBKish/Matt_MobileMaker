@@ -10,8 +10,6 @@
  1. Implement a method on the Person class called “copy” that takes in a Person* object and should return a new instance of a Person with the same properties as the person passed into the method
  3. Add a method called initWithPerson: method to your Person object
  4. In the ViewController.m class file, use both the copy: and initWithPerson methods to instantiate new Person objects
- 
- 
  */
 
 #import "ViewController.h"
@@ -22,7 +20,7 @@
 @interface ViewController ()
 
 {
-    StartUp * faceBook;      
+    //StartUp * faceBook;
 }
 
 
@@ -35,10 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
+	// Do any additional setup after loading the view, typically from a nib.
+    StartUp * faceBook;
     faceBook = [[StartUp alloc] init];
     
+
     faceBook.boss = [[Manager alloc] init];
     faceBook.boss.name = @"Mark Zuckerberg";
     faceBook.boss.email = @"Mark@facebook.com";
