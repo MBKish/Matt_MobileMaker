@@ -71,3 +71,5 @@
     [self animateAllViewsFromTagArray:arrayOfTags atIndex:0];
 }
 @end
+
+//Store each tag of the tapped ColorPanelView in an array, then compare that array to the arrayOfTags

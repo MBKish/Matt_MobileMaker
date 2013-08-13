@@ -9,11 +9,13 @@
 #import "ViewController.h"
 #import "Person.h"
 #import "ShowViewController.h"
+#import "EditViewController.h"
 
 @interface ViewController (){
     NSMutableArray *people;
     IBOutlet UITableView *myTableView;
     int row;
+    BOOL editAdd;
 }
 
 @end
@@ -23,6 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -97,16 +100,36 @@
     [self performSegueWithIdentifier:@"toShowView" sender:self];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-
-    if ([segue.identifier isEqualToString:@"toShowView"]) {
-    ShowViewController * detailsViewController = segue.destinationViewController;
-    row = [myTableView indexPathForSelectedRow].row;
-    detailsViewController.firstNameString = ((Person*)[people objectAtIndex:row]).firstName;
-    detailsViewController.lastNameString = ((Person*)[people objectAtIndex:row]).lastName;
-    detailsViewController.emailString = ((Person*)[people objectAtIndex:row]).emailAddress;
-    detailsViewController.phoneString = ((Person*)[people objectAtIndex:row]).phoneNumber;
-    }
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [people removeObjectAtIndex:indexPath.row];
+    [myTableView reloadData];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIBarButtonItem*)sender{
+    if ([segue.identifier isEqualToString:@"toAddPerson"]){
+        //Adds Person
+        EditViewController *editViewController = segue.destinationViewController;
+        editViewController.delegate = self;
+        editAdd = YES;
+    } else {
+        //Edits Person
+        ShowViewController * detailsViewController = segue.destinationViewController;
+        row = [myTableView indexPathForSelectedRow].row;
+        detailsViewController.delegate = self;
+        detailsViewController.person = ((Person*)[people objectAtIndex:row]);
+        editAdd = NO;
+    } 
+}
+
+- (void) editRecord:(Person *)updatedPerson{
+    if (editAdd == YES) {
+        //Adds Person
+        [people addObject:updatedPerson];
+        [myTableView reloadData];
+    }else {
+        //Edits Person
+        [people replaceObjectAtIndex:row withObject:updatedPerson];
+        [myTableView reloadData];
+    }
+}
 @end
